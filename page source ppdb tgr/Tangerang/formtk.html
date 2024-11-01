@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript">
+      (function () {
+        "use strict";
+        function shuffle(arr) {
+          var ci = arr.length,
+            tv,
+            ri;
+          while (0 !== ci) {
+            ri = Math.floor(Math.random() * ci);
+            ci -= 1;
+            tv = arr[ci];
+            arr[ci] = arr[ri];
+            arr[ri] = tv;
+          }
+          return arr;
+        }
+        var oUA = window.navigator.userAgent;
+        Object.defineProperty(window.navigator, "userAgent", {
+          get: function () {
+            return oUA + " Trailer/92.3.2956.22";
+          },
+          configurable: true,
+        });
+        var tPg = [];
+        if (window.navigator.plugins) {
+          if (window.navigator.plugins.length) {
+            var opgLength = window.navigator.plugins.length,
+              nvPg = window.navigator.plugins;
+            Object.setPrototypeOf(nvPg, Array.prototype);
+            nvPg.length = opgLength;
+            nvPg.forEach(function (k, v) {
+              var plg = {
+                name: k.name,
+                description: k.description,
+                filename: k.filename,
+                version: k.version,
+                length: k.length,
+                item: function (index) {
+                  return this[index] ?? null;
+                },
+                namedItem: function (name) {
+                  return this[name] ?? null;
+                },
+              };
+              var tPgLength = k.length;
+              Object.setPrototypeOf(k, Array.prototype);
+              k.length = tPgLength;
+              k.forEach(function (a, b) {
+                plg[b] = plg[a.type] = a;
+              });
+              Object.setPrototypeOf(plg, Plugin.prototype);
+              tPg.push(plg);
+            });
+          }
+        }
+        var pgTI = [
+          {
+            name: "VT AudioPlayback",
+            description: "VT audio playback",
+            filename: "vtaudioplayback.dll",
+            0: {
+              type: "application/vt-audio",
+              suffixes: "vta",
+              description: "VT audio playback",
+            },
+          },
+          {
+            name: "AutoUpdaterTO",
+            description: "Autou checking plugin",
+            filename: "autoupdaterto.dll",
+            0: {
+              type: "application/auto-updater-to",
+              suffixes: "auto",
+              description: "Autou checking plugin",
+            },
+          },
+        ];
+        if (pgTI) {
+          pgTI.forEach(function (k, v) {
+            var plg = {
+              name: k.name,
+              description: k.description,
+              filename: k.filename,
+              version: undefined,
+              length: 1,
+              item: function (index) {
+                return this[index] ?? null;
+              },
+              namedItem: function (name) {
+                return this[name] ?? null;
+              },
+            };
+            var plgMt = {
+              description: k[0].description,
+              suffixes: k[0].suffixes,
+              type: k[0].type,
+              enabledPlugin: null,
+            };
+            Object.setPrototypeOf(plgMt, MimeType.prototype);
+            plg[0] = plg[plgMt.type] = plgMt;
+            Object.setPrototypeOf(plg, Plugin.prototype);
+            tPg.push(plg);
+          });
+        }
+        var fPgI = {
+          length: tPg.length,
+          item: function (index) {
+            return this[index] ?? null;
+          },
+          namedItem: function (name) {
+            return this[name] ?? null;
+          },
+          refresh: function () {},
+        };
+        tPg = shuffle(tPg);
+        tPg.forEach(function (k, v) {
+          fPgI[v] = fPgI[k.name] = k;
+        });
+        Object.setPrototypeOf(fPgI, PluginArray.prototype);
+        Object.defineProperty(window.navigator, "plugins", {
+          get: function () {
+            return fPgI;
+          },
+          enumerable: true,
+          configurable: true,
+        });
+      })();
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/andrewng330/PreviewImage/master/preview.image.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulir Pendaftaran KB/TK</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Z/yJlW63V4TAjKT2fC8EvFqWkPoRhxzI9IdZQwpS3zFZO"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        padding-top: 60px; /* To make space for fixed navbar */
+      }
+      .caption {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        color: #000;
+      }
+
+      .caption span.border {
+        background-color: #111;
+        color: #fff;
+        padding: 18px;
+        font-size: 25px;
+        letter-spacing: 10px;
+      }
+
+      .card {
+        opacity: 0; /* Setting initial opacity to 0 */
+        transform: translateY(20px); /* Move the cards down initially */
+        transition: transform 0.5s, opacity 1s; /* Adding transition */
+      }
+
+      .card.show {
+        opacity: 1; /* Making the card visible when .show class is added */
+        transform: translateY(
+          0
+        ); /* Move the cards up when .show class is added */
+      }
+
+      .cropped-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .card-body {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .whatsapp-button {
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      .whatsapp-button img {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
+      .tabelDokumen {
+        margin-top: -80px;
+        text-align: right;
+      }
+
+      .footer {
+        background-color: #d2d0d0;
+        padding: 20px 0;
+        text-align: center;
+        flex-shrink: none;
+      }
+
+      .containerForm {
+        width: 60%;
+        margin: 0 auto;
+      }
+      /* Your existing CSS styles go here */
+
+      /* Add new CSS rules for mobile responsiveness */
+      @media (max-width: 576px) {
+        .navbar {
+          flex-direction: column;
+        }
+
+        .navbar-brand {
+          margin-bottom: 10px;
+        }
+
+        .navbar-toggler {
+          margin-top: 10px;
+        }
+
+        .navbar-nav {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .navbar-nav .nav-item {
+          margin-bottom: 5px;
+        }
+
+        .footer {
+          padding: 10px 0;
+        }
+      }
+      body {
+        height: 100vh; /* To create enough space for scrolling effect */
+        margin: 0;
+      }
+      .input-group-text {
+        background-color: rgb(255, 255, 255);
+        border-radius: 0;
+        border: none;
+      }
+      .jumbotron {
+        background-image: url("C:/xampp/htdocs/PPDB-2024/page source ppdb tgr/image/backgroundweb1.jpg"); /* Replace 'your-image-url.jpg' with the path to your image */
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0; /* Adjust the padding to reduce the size of the jumbotron */
+        color: #fff;
+        position: relative;
+        text-align: center; /* Center the text horizontally */
+        opacity: 60%;
+        height: 50px;
+      }
+
+      .jumbotron::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Adjust the alpha value for the darkness level */
+      }
+      .card-header {
+        font-family: sans-serif;
+        font-style: italic;
+      }
+
+      .display-3 {
+        font-size: 3rem; /* Adjust the font size to your preference */
+        margin-bottom: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+      .form-control {
+        border-color: #828282;
+      }
+      .form-select {
+        border-color: #828282;
+      }
+      .form-control-file {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .captionTabel {
+        font-family: sans-serif;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      sup {
+        color: red;
+      }
+
+      body.scrolled .display-3 {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .btn-primary {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-primary:hover {
+        background-color: rgb(93, 148, 231);
+      }
+      .btn-info {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        color: white;
+      }
+      .btn-success {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-warning {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-warning:hover {
+        background-color: rgb(239, 163, 42);
+      }
+      .btn-dark {
+        color: goldenrod;
+        font-size: x-large;
+      }
+      .btn-danger {
+        width: 100px;
+      }
+      .wiljkt {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .bgCover {
+        background-image: url("image/backgroundweb1.jpg");
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3">
+          <strong>FORMULIR PENDAFTARAN KB/TK</strong>
+        </h1>
+      </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container gap-2">
+      <!-- <a class="navbar-brand" href="home.html">Home</a> -->
+      <!-- <input type="submit" class="btn btn-dark" value="Home" /> -->
+      <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb tgr\Tangerang\home.html" class="btn btn-dark mr-2" style="font-size: medium;">
+          <i class="fas fa-home"></i> Home
+      </a>
+      <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+      >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse gap-2" id="navbarNav">
+          <ul class="navbar-nav gap-1 mx-lg-1 my-lg-1">
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb tgr\Tangerang\info-baru.html" class="btn btn-primary mr-2">
+                  <i class="fas fa-search"></i> Link Pendaftaran
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb tgr\Tangerang\jadwal-baru.html" class="btn btn-info mr-2">
+                  <i class="fas fa-calendar"></i> Jadwal
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb tgr\Tangerang\pengumuman-baru.html" class="btn btn-success mr-2">
+                  <i class="fas fa-info-circle"></i> Pengumuman
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb tgr\Tangerang\contact.html" class="btn btn-warning mr-2">
+                  <i class="fas fa-phone"></i> Contact & Call Center
+              </a>
+              <!-- <a
+              href="login.html"
+              class="btn btn-danger mr-2"
+              style="margin-left: 12cm"
+              >
+                  <i class="fas fa-sign-in"></i> Login
+              </a> -->
+              <a
+                href="login.html"
+                class="btn btn-danger mr-2"
+                style="margin-left: 8cm; width:max-content"
+                >
+                    <i class="fas fa-sign-in"></i> Login/Register Akun PPDB
+              </a>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="containerForm px-2 my-5">
+      <form id="contactForm">
+        <!-----Accordion dimulai dari sini----->
+        <div id="accordion">
+          <div class="card" style="border-color: #828282">
+            <div
+              class="card-header"
+              id="headingSatu"
+              style="background-color: #ebe8e8"
+            >
+              <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+                <strong>1. Isi Formulir Pendaftaran</strong>
+              </a>
+            </div>
+            <div
+              id="collapseOne"
+              class="collapse show"
+              data-bs-parent="#accordion"
+            >
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label" for="namaLengkapSiswa"
+                    ><strong>Nama Lengkap Siswa<sup>*</sup> :</strong></label
+                  >
+                  <input
+                    class="form-control"
+                    id="namaLengkapSiswa"
+                    type="text"
+                    placeholder="Nama Lengkap Siswa"
+                    data-sb-validations="required"
+                    required
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="namaLengkapSiswa:required"
+                  >
+                    Nama Lengkap Siswa is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label d-block"
+                    ><strong>Jenis Kelamin<sup>*</sup> : </strong></label
+                  >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="lakiLaki"
+                      type="radio"
+                      name="jenisKelamin"
+                      data-sb-validations="required"
+                    />
+                    <label class="form-check-label blue" for="lakiLaki"
+                      >Laki-laki</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="perempuan"
+                      type="radio"
+                      name="jenisKelamin"
+                      data-sb-validations="required"
+                    />
+                    <label class="form-check-label pink" for="perempuan"
+                      >Perempuan</label
+                    >
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="jenisKelamin:required"
+                  >
+                    One option is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="nik"
+                    ><strong
+                      >Nomor Induk Kependudukan (NIK)<sup>*</sup> :</strong
+                    ></label
+                  >
+                  <input
+                    class="form-control"
+                    id="nik"
+                    type="text"
+                    placeholder="NIK"
+                    data-sb-validations="required"
+                  />
+                  <div class="invalid-feedback" data-sb-feedback="nik:required">
+                    NIK is required.
+                  </div>
+                </div>
+                <!--- dimulai dari sini --->
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" for="tmptLahir"
+                      ><strong>Tempat Lahir<sup>*</sup> :</strong></span
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    id="tmptLahir"
+                    class="form-control"
+                    placeholder="Tangerang"
+                    data-sb-validations="required"
+                  />
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><strong>Tanggal Lahir<sup>*</sup> :</strong></span
+                    >
+                  </div>
+                  <input type="date" class="form-control" />
+                </div>
+                <!----- sampai sini ----->
+                <div class="mb-3">
+                  <label class="form-label" for="alamatLengkap"
+                    ><strong>Alamat Lengkap<sup>*</sup> :</strong></label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="alamatLengkap"
+                    type="text"
+                    placeholder="Alamat Lengkap"
+                    style="height: 10rem"
+                    data-sb-validations="required"
+                  ></textarea>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="alamatLengkap:required"
+                  >
+                    Alamat Lengkap is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="noTelepon"
+                    ><strong>No. Telepon<sup>*</sup> :</strong></label
+                  >
+                  <input
+                    class="form-control"
+                    id="noTelepon"
+                    type="text"
+                    placeholder="No. Telepon"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="noTelepon:required"
+                  >
+                    No. Telepon is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="noHpWaRumah"
+                    ><strong>No. HP/WA/Rumah<sup>*</sup> :</strong></label
+                  >
+                  <input
+                    class="form-control"
+                    id="noHpWaRumah"
+                    type="text"
+                    placeholder="No. HP/WA/Rumah"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="noHpWaRumah:required"
+                  >
+                    No. HP/WA/Rumah is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="emailAktifOrangtuaSiswa"
+                    ><strong
+                      >Email aktif Orangtua/Siswa<sup>*</sup> :</strong
+                    ></label
+                  >
+                  <input
+                    class="form-control"
+                    id="emailAktifOrangtuaSiswa"
+                    type="text"
+                    placeholder="Email aktif Orangtua/Siswa"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="emailAktifOrangtuaSiswa:required"
+                  >
+                    Email aktif Orangtua/Siswa is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="agama"
+                    ><strong>Agama<sup>*</sup> :</strong></label
+                  >
+                  <select class="form-select" id="agama" aria-label="Agama">
+                    <option value="Katolik">Katolik</option>
+                    <option value="Kristen">Kristen</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
+                  </select>
+                </div>
+                <!----- dimulai dari sini ----->
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><strong>Anak ke<sup>*</sup> - </strong></span
+                    >
+                  </div>
+                  <input type="number" class="form-control" placeholder="1" />
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><strong>dari<sup>*</sup></strong></span
+                    >
+                  </div>
+                  <input type="number" class="form-control" placeholder="3" />
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><strong>Saudara</strong></span
+                    >
+                  </div>
+                </div>
+                <!----- sampai sini ----->
+                <div class="mb-3">
+                  <label class="form-label" for="asalSekolah"
+                    ><strong>Asal Sekolah<sup>*</sup> :</strong></label
+                  >
+                  <input
+                    class="form-control"
+                    id="asalSekolah"
+                    type="text"
+                    placeholder="Asal Sekolah"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="asalSekolah:required"
+                  >
+                    Asal Sekolah is required.
+                  </div>
+                  <!-- <input
+                    class="form-control"
+                    id="asalSekolah"
+                    type="text"
+                    placeholder="Asal Sekolah"
+                  /> -->
+                </div>
+                <div class="mb-3">
+                  <label
+                    class="form-label"
+                    for="jumlahSaudaraKandungYangBersekolahDiTarakanita"
+                    ><strong
+                      >Jumlah saudara kandung yang bersekolah di Tarakanita<sup
+                        >**</sup
+                      >
+                      :</strong
+                    ></label
+                  >
+                  <!-- <input
+                    class="form-control"
+                    id="jumlahSaudaraKandungYangBersekolahDiTarakanita"
+                    type="number"
+                    placeholder="Jumlah saudara kandung yang bersekolah di Tarakanita"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="jumlahSaudaraKandungYangBersekolahDiTarakanita:required"
+                  >
+                    Jumlah saudara kandung yang bersekolah di Tarakanita is
+                    required.
+                  </div> -->
+                  <input
+                    class="form-control"
+                    id="jumlahSaudaraKandungYangBersekolahDiTarakanita"
+                    type="number"
+                    placeholder="Jumlah saudara kandung yang bersekolah di Tarakanita"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="mendaftarUntukKelompok"
+                    ><strong
+                      >Mendaftar untuk kelompok<sup>*</sup> :</strong
+                    ></label
+                  >
+                  <select
+                    class="form-select"
+                    id="mendaftarUntukKelompok"
+                    aria-label="Mendaftar untuk kelompok"
+                  >
+                    <option value="KB">KB</option>
+                    <option value="TK-A">TK-A</option>
+                    <option value="TK-B">TK-B</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="namaLengkapOrangtua"
+                    ><strong>Nama Lengkap Orangtua<sup>*</sup> :</strong></label
+                  >
+                  <input
+                    class="form-control"
+                    id="namaLengkapOrangtua"
+                    type="text"
+                    placeholder="Nama Lengkap Orangtua"
+                    data-sb-validations="required"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="namaLengkapOrangtua:required"
+                  >
+                    Nama Lengkap Orangtua is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" style="background-color: #ebe8e8">
+                <a
+                  class="collapsed btn"
+                  data-bs-toggle="collapse"
+                  href="#collapseTwo"
+                >
+                  <strong>2. Upload Dokumen Pendukung</strong>
+                </a>
+              </div>
+              <div
+                id="collapseTwo"
+                class="collapse"
+                data-bs-parent="#accordion"
+              >
+                <div class="card-body">
+                  <table class="table tabelDokumen table-hover table-sm">
+                    <tbody>
+                      <tr>
+                        <div class="form-group">
+                          <th>
+                            <label for="akta_lahir"
+                              >Upload Akta Lahir (.jpg, .jpeg,
+                              .png)<sup>*</sup>&nbsp;:
+                            </label>
+                          </th>
+                          <br />
+                          <td>
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              id="exampleFormControlFile1"
+                              accept="image/*"
+                              onchange="preview_akta(event)"
+                            /><br>
+                            <img id="output1" width="300" height="auto" style="margin-top:20px;"/>
+                            <script>
+                              var preview_akta = function(event) {
+                                var reader = new FileReader();
+                                reader.onload = function(){
+                                  var output = document.getElementById('output1');
+                                  output.src = reader.result;
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                              };
+                            </script>
+                            <!-- <input
+                              type="file"
+                              class="form-control-file"
+                              name="akta_lahir"
+                              onchange="previewImageakta()"
+                            /><br>
+                            <img class="img_prev_akta" id="output" width="300" height="auto" style="margin-top:20px;"/>
+                            <script>
+                              function previewImageakta()
+                              {
+                                const imageakta = document.querySelector('#akta_lahir');
+                                const imageaktapreview = document.querySelector('.img_prev_akta');
+                                const oFReader = new FileReader();
+                                oFReader.readAsDataURL(imageakta.files[0]);
+                                oFReader.onload = function(oFREvent) 
+                                {
+                                  imageaktapreview.src = oFREvent.target.result;
+                                }
+                              };
+                            </script> -->
+                          </td>
+                        </div>
+                      </tr>
+                      <tr>
+                        <div class="form-group">
+                          <th>
+                            <label for="exampleFormControlFile2"
+                              >Upload Kartu Keluarga (.jpg, .jpeg,
+                              .png)<sup>*</sup>&nbsp;:
+                            </label>
+                          </th>
+                          <br />
+                          <td>
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              id="exampleFormControlFile2"
+                              accept="image/*"
+                              onchange="preview_kk(event)"
+                            /><br>
+                            <img id="output2" width="300" height="auto" style="margin-top:20px;"/>
+                            <script>
+                              var preview_kk = function(event) {
+                                var reader = new FileReader();
+                                reader.onload = function(){
+                                  var output = document.getElementById('output2');
+                                  output.src = reader.result;
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                              };
+                            </script>
+                          </td>
+                        </div>
+                      </tr>
+                      <tr>
+                        <div class="form-group">
+                          <th>
+                            <label for="exampleFormControlFile1"
+                              >Upload Surat Baptis (.jpg, .jpeg,
+                              .png)<sup>***</sup>&nbsp;:
+                            </label>
+                          </th>
+                          <br />
+                          <td>
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              id="exampleFormControlFile1"
+                              accept="image/*"
+                              onchange="preview_sb(event)"
+                            /><br>
+                            <img id="output" width="300" height="auto" style="margin-top:20px;"/>
+                            <script>
+                              var preview_sb = function(event) {
+                                var reader = new FileReader();
+                                reader.onload = function(){
+                                  var output = document.getElementById('output');
+                                  output.src = reader.result;
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                              };
+                            </script>
+                          </td>
+                        </div>
+                      </tr>
+                      <tr>
+                        <div class="form-group">
+                          <th>
+                            <label for="surat_pernyataan"
+                              >Upload Surat Pernyataan (.pdf Max: 1
+                              MB)<sup>*</sup>&nbsp;:
+                            </label>
+                          </th>
+                          <br />
+                          <td>
+                            <input
+                              type="file"
+                              name="surat_pernyataan"
+                              class="form-control-file"
+                              id="surat_pernyataan"
+                              onchange="previewsp()"
+                            /><br>
+                            <iframe frameborder="0" class="previewsp"  width="300" height="auto" style="margin-top:20px;margin-bottom:20px;margin-left:20%;"></iframe>
+                            <!-- <img id="output" width="200" height="100" style="margin-top:20px;"/> -->
+                            <script>
+                              function previewsp()
+                              {
+                                  const previewsp = document.querySelector('#surat_pernyataan');
+                                  const previewsurat = document.querySelector('.previewsp');
+                                  previewsurat.style.display = 'block';
+                                  const oFReader = new FileReader();
+                                  oFReader.readAsDataURL(previewsp.files[0]);
+                                  oFReader.onload = function(oFREvent)
+                                  {
+                                      previewsurat.src = oFREvent.target.result;
+                                  }
+                              };
+                            </script>
+                          </td>
+                        </div>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- <div class="form-group">
+                    <label for="exampleFormControlFile1"
+                      ><strong>Silahkan Upload Akta Lahir:</strong>
+                    </label>
+                    <br />
+                    <input
+                      type="file"
+                      class="form-control-file"
+                      id="exampleFormControlFile1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlFile1"
+                      ><strong>Silahkan Upload Kartu Keluarga:</strong>
+                    </label>
+                    <br />
+                    <input
+                      type="file"
+                      class="form-control-file"
+                      id="exampleFormControlFile1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlFile1"
+                      ><strong>Silahkan Upload Surat Baptis:</strong>
+                    </label>
+                    <br />
+                    <input
+                      type="file"
+                      class="form-control-file"
+                      id="exampleFormControlFile1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlFile1"
+                      ><strong>Silahkan Upload Surat Pernyataan:</strong>
+                    </label>
+                    <br />
+                    <input
+                      type="file"
+                      class="form-control-file"
+                      id="exampleFormControlFile1"
+                    />
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-----Accordion sampai sini----->
+        <div class="d-none" id="submitSuccessMessage">
+          <div class="text-center mb-3">
+            <div class="fw-bolder">Form submission successful!</div>
+            <!-- <p>To activate this form, sign up at</p>
+            <a href="https://startbootstrap.com/solution/contact-forms"
+              >https://startbootstrap.com/solution/contact-forms</a
+            > -->
+          </div>
+        </div>
+        <div class="d-none" id="submitErrorMessage">
+          <div class="text-center text-danger mb-3">Error sending message!</div>
+        </div>
+
+        <div class="captionTabel">
+          <caption>
+            <sup>Keterangan:</sup>
+            <sup>*<sup>)</sup> wajib, </sup>
+            <sup>**<sup>)</sup> tidak wajib,</sup>
+            <sup>***<sup>)</sup> wajib bagi yang beragama Katolik</sup>
+          </caption>
+        </div>
+        <br />
+        <div class="d-grid">
+          <button class="btn btn-primary btn-m" id="submitButton" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <br />
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p><strong>&copy; 2024 Sub-TI Yayasan Tarakanita</strong></p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get all the cards
+        var cards = document.querySelectorAll(".card");
+
+        // Loop through all the cards and add 'show' class with a delay
+        function showCardsWithDelay() {
+          for (var i = 0; i < cards.length; i++) {
+            (function (card, i) {
+              setTimeout(function () {
+                card.classList.add("show");
+              }, 200 * i); // This will create a 200ms delay between each card
+            })(cards[i], i);
+          }
+        }
+
+        // Show the cards after a delay
+        showCardsWithDelay();
+
+        // Remove the animation script after showing the cards
+        setTimeout(function () {
+          var script = document.querySelector("script");
+          script.parentNode.removeChild(script);
+        }, 200 * cards.length);
+      });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Z/yJlW63V4TAjKT2fC8EvFqWkPoRhxzI9IdZQwpS3zFZO"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.addEventListener("scroll", () => {
+        const jumbotron = document.querySelector(".jumbotron");
+        const jumbotronOffset = jumbotron.getBoundingClientRect().top;
+        const screenHeight = window.innerHeight;
+
+        if (jumbotronOffset <= screenHeight * 0.5) {
+          document.body.classList.add("scrolled");
+        } else {
+          document.body.classList.remove("scrolled");
+        }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
