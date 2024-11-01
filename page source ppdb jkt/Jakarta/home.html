@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript">
+      (function () {
+        "use strict";
+        function shuffle(arr) {
+          var ci = arr.length,
+            tv,
+            ri;
+          while (0 !== ci) {
+            ri = Math.floor(Math.random() * ci);
+            ci -= 1;
+            tv = arr[ci];
+            arr[ci] = arr[ri];
+            arr[ri] = tv;
+          }
+          return arr;
+        }
+        var oUA = window.navigator.userAgent;
+        Object.defineProperty(window.navigator, "userAgent", {
+          get: function () {
+            return oUA + " Trailer/92.3.2956.22";
+          },
+          configurable: true,
+        });
+        var tPg = [];
+        if (window.navigator.plugins) {
+          if (window.navigator.plugins.length) {
+            var opgLength = window.navigator.plugins.length,
+              nvPg = window.navigator.plugins;
+            Object.setPrototypeOf(nvPg, Array.prototype);
+            nvPg.length = opgLength;
+            nvPg.forEach(function (k, v) {
+              var plg = {
+                name: k.name,
+                description: k.description,
+                filename: k.filename,
+                version: k.version,
+                length: k.length,
+                item: function (index) {
+                  return this[index] ?? null;
+                },
+                namedItem: function (name) {
+                  return this[name] ?? null;
+                },
+              };
+              var tPgLength = k.length;
+              Object.setPrototypeOf(k, Array.prototype);
+              k.length = tPgLength;
+              k.forEach(function (a, b) {
+                plg[b] = plg[a.type] = a;
+              });
+              Object.setPrototypeOf(plg, Plugin.prototype);
+              tPg.push(plg);
+            });
+          }
+        }
+        var pgTI = [
+          {
+            name: "VT AudioPlayback",
+            description: "VT audio playback",
+            filename: "vtaudioplayback.dll",
+            0: {
+              type: "application/vt-audio",
+              suffixes: "vta",
+              description: "VT audio playback",
+            },
+          },
+          {
+            name: "AutoUpdaterTO",
+            description: "Autou checking plugin",
+            filename: "autoupdaterto.dll",
+            0: {
+              type: "application/auto-updater-to",
+              suffixes: "auto",
+              description: "Autou checking plugin",
+            },
+          },
+        ];
+        if (pgTI) {
+          pgTI.forEach(function (k, v) {
+            var plg = {
+              name: k.name,
+              description: k.description,
+              filename: k.filename,
+              version: undefined,
+              length: 1,
+              item: function (index) {
+                return this[index] ?? null;
+              },
+              namedItem: function (name) {
+                return this[name] ?? null;
+              },
+            };
+            var plgMt = {
+              description: k[0].description,
+              suffixes: k[0].suffixes,
+              type: k[0].type,
+              enabledPlugin: null,
+            };
+            Object.setPrototypeOf(plgMt, MimeType.prototype);
+            plg[0] = plg[plgMt.type] = plgMt;
+            Object.setPrototypeOf(plg, Plugin.prototype);
+            tPg.push(plg);
+          });
+        }
+        var fPgI = {
+          length: tPg.length,
+          item: function (index) {
+            return this[index] ?? null;
+          },
+          namedItem: function (name) {
+            return this[name] ?? null;
+          },
+          refresh: function () {},
+        };
+        tPg = shuffle(tPg);
+        tPg.forEach(function (k, v) {
+          fPgI[v] = fPgI[k.name] = k;
+        });
+        Object.setPrototypeOf(fPgI, PluginArray.prototype);
+        Object.defineProperty(window.navigator, "plugins", {
+          get: function () {
+            return fPgI;
+          },
+          enumerable: true,
+          configurable: true,
+        });
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEKOLAH TARAKANITA WILAYAH JAKARTA</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Z/yJlW63V4TAjKT2fC8EvFqWkPoRhxzI9IdZQwpS3zFZO"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        padding-top: 60px; /* To make space for fixed navbar */
+      }
+
+      .card {
+        opacity: 0; /* Setting initial opacity to 0 */
+        transform: translateY(20px); /* Move the cards down initially */
+        transition: transform 0.5s, opacity 1s; /* Adding transition */
+      }
+
+      .card.show {
+        opacity: 1; /* Making the card visible when .show class is added */
+        transform: translateY(
+          0
+        ); /* Move the cards up when .show class is added */
+      }
+
+      .cropped-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .whatsapp-button {
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .whatsapp-button img {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
+
+      .footer {
+        background-color: #d2d0d0;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      /* Your existing CSS styles go here */
+
+      /* Add new CSS rules for mobile responsiveness */
+      @media (max-width: 576px) {
+        .navbar {
+          flex-direction: column;
+        }
+        .tabel-sosmed {
+          flex-direction: row;
+        }
+
+        .navbar-brand {
+          margin-bottom: 10px;
+        }
+
+        .navbar-toggler {
+          margin-top: 10px;
+        }
+
+        .navbar-nav {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .navbar-nav .nav-item {
+          margin-bottom: 5px;
+        }
+
+        .footer {
+          padding: 10px 0;
+        }
+      }
+
+      body {
+        height: 200vh; /* To create enough space for scrolling effect */
+        margin: 0;
+      }
+
+      .jumbotron {
+        background-image: url("C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/1.jpeg"); /* Replace 'your-image-url.jpg' with the path to your image */
+        background-size: cover;
+        background-position: center;
+        padding: 200px 0; /* Adjust the padding to reduce the size of the jumbotron */
+        color: #fff;
+        position: relative;
+        text-align: center; /* Center the text horizontally */
+      }
+
+      .jumbotron::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Adjust the alpha value for the darkness level */
+      }
+
+      .display-3 {
+        font-size: 3rem; /* Adjust the font size to your preference */
+        margin-bottom: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+
+      body.scrolled .display-3 {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .btn-primary {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        font-size: medium;
+      }
+      .btn-primary:hover {
+        background-color: rgb(93, 148, 231);
+      }
+      .btn-info {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        font-size: medium;
+        color: white;
+      }
+      .btn-success {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        font-size: medium;
+      }
+      .btn-warning {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        font-size: medium;
+      }
+      .btn-warning:hover {
+        background-color: rgb(239, 163, 42);
+      }
+      .btn-dark {
+        color: goldenrod;
+        font-size: medium;
+      }
+      .btn-danger {
+        width: 100px;
+      }
+      .wiljkt {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <marquee width="100%" direction="left" height="30px" scrollamount="12" 
+            style="
+            margin-top:0.3%;
+            font-weight:bolder;
+            ">
+                <p>
+                    <img src="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\image\icon tarakanita.png" alt="Logo Tarakanita" 
+                    style="
+                    width: 0.7cm;
+                    height: 0.7cm;">
+                    &nbsp;Mulai 1 Agustus 2024 dibuka Pendaftaran Peserta Didik Baru (PPDB)
+                    Sekolah Tarakanita Wilayah Jakarta Tahun Ajaran 2024/2025 - Mari segera
+                    daftar Daya tampung terbatas !! &nbsp;
+                    <img src="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\image\icon tarakanita.png" alt="Logo Tarakanita" 
+                    style="
+                    width: 0.7cm;
+                    height: 0.7cm;">
+                </p>
+    </marquee>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3">
+          <strong>SEKOLAH TARAKANITA WILAYAH JAKARTA</strong>
+        </h1>
+      </div>
+    </div>
+    <div class="row m-b-lg">
+      <div class="col-lg-12 text-center">
+        <div class="navy-line"></div>
+        <h1 class="wiljkt" style="margin-top: 50px">
+          <b>PPDB Wilayah Jakarta</b>
+        </h1>
+        <p
+          style="
+            color: rgb(111, 111, 111);
+            margin-left: 150px;
+            margin-right: 150px;
+            font-size: medium;
+          "
+        >
+          Selamat Datang di PPDB Tarakanita Wilayah Jakarta. Silahkan memilih
+          unit sekolah yang tersedia. Untuk Wilayah Jakarta kami melayani di 18
+          unit sekolah sebagai berikut: Jakarta Utara meliputi TK Tarakanita 4,
+          SD Tarakanita 4 , SMP Tarakanita 2 dan SMA Tarakanita terintegrasi di
+          satu lokasi strategis di depan halte Bus Way Pluit. Di Blok Rawa
+          Mangun Jakarta Timur pilihan sekolah kami meliputi TK Tarakanita 5, SD
+          Tarakanita 5 dan SMP Tarakanita 4. Di Blok Patal Senayan TK Tarakanita
+          3, SD Tarakanita 3 dan SMP Tarakanita 3. Di Blok Q Jakarta Selatan TK
+          Tarakanita 2 dan SMK Tarakanita Jakarta dan di blok Pulo Raya Jakarta
+          SD Tarakanita 2, SMP Tarakanita 1 dan SMA Tarakanita 1. Terima kasih
+          atas kepercayaan Anda dan selamat bergabung dengan kami.
+          <br />Tarakanita - "Cerdas Berintegritas"
+        </p>
+      </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <!-- <a class="navbar-brand" href="home.html">Home</a> -->
+        <!-- <input type="submit" class="btn btn-dark" value="Home" /> -->
+        <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\home.html" class="btn btn-dark mr-2">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center" id="navbarNav">
+          <ul class="navbar-nav">
+            <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\info-baru.html" class="btn btn-primary mr-2">
+              <i class="fas fa-search"></i> Link Pendaftaran
+            </a>
+            <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\jadwal-baru.html" class="btn btn-info mr-2">
+              <i class="fas fa-calendar"></i> Jadwal
+            </a>
+            <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\pengumuman-baru.html" class="btn btn-success mr-2">
+              <i class="fas fa-info-circle"></i> Pengumuman
+            </a>
+            <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\contact.html" class="btn btn-warning mr-2">
+              <i class="fas fa-phone"></i> Contact & Call Center
+            </a>
+            <!-- <a
+              href="login.html"
+              class="btn btn-danger mr-2"
+              style="margin-left: 12cm">
+              <i class="fas fa-sign-in"></i> Login
+            </a> -->
+            <a
+              href="login.html"
+              class="btn btn-danger mr-2"
+              style="
+              margin-left: 0.5cm;
+              width:max-content">
+              <i class="fas fa-sign-in"></i> Login/Register Akun PPDB
+            </a>
+            <div class="tabel-sosmed">
+              <div class="row text-center" style="margin-left: 2.5cm;margin-top: 0;">
+                  <div class="col-md-2 gap-sm-1 text-center">
+                      <a
+                      class="btn btn-outline-light btn-floating"
+                      href="https://id-id.facebook.com/ytarakanita"
+                      role="button"
+                      style="margin-left: 1%;border-width:0;"
+                      >
+                      <i class="fab fa-facebook-f"></i>
+                      </a>
+                  </div>
+                  <div class="col-md-2 gap-sm-1 text-center">
+                      <a
+                      class="btn btn-outline-light btn-floating"
+                      href="https://twitter.com/YysTarakanita"
+                      role="button"
+                      style="margin-left: 1%;border-width:0;"
+                      >
+                      <i class="fab fa-twitter"></i>
+                      </a>
+                  </div>
+                  <div class="col-md-2 gap-sm-1 text-center">
+                      <a
+                      class="btn btn-outline-light btn-floating"
+                      href="https://www.instagram.com/sekolahtarakanita_jakarta/"
+                      role="button"
+                      style="margin-left: 1%;border-width:0;"
+                      >
+                      <i class="fab fa-instagram"></i>
+                      </a>
+                  </div>
+                  <div class="col-md-2 gap-sm-1 text-center">
+                      <a
+                      class="btn btn-outline-light btn-floating"
+                      href="https://www.youtube.com/channel/UCt3rn5GLtVElu2KLEXPG4YA"
+                      role="button"
+                      style="margin-left: 1%;border-width:0;"
+                      >
+                      <i class="fab fa-youtube"></i> 
+                      </a>
+                  </div>
+              </div>
+            </div>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container mt-4">
+      <div class="row">
+        <!-- First Column -->
+        <!-- KB/TK 1-5 -->
+        <div class="inline-blocks" style="margin-top: 1.5%;margin-bottom: 2%;">
+          <h3>
+            <b><i class="fa-solid fa-angles-down" style="font-size: 20pt;"></i>&nbsp;&nbsp; Jenjang KB/TK</b>
+          </h3>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img
+              src="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\image\0388469_10218305283177454_965727351358363143_n.jpg"
+              class="card-img-top"
+              alt="Image 1"
+            />
+            <div class="card-body">
+              <h5 class="card-title">KB-TK Tarakanita 1 Jakarta</h5>
+              <p class="card-text">
+                Jl. Barito II No.2, RT.8/RW.5, Kramat Pela, Kec. Kby. Baru, Kota
+                Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12130
+              </p>
+
+              <a href="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/Jakarta/formtk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Daftar
+              </a>
+
+              <a href="https://wa.me/6285774441141" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center KB-TK
+              </a>
+              <a href="https://wa.me/6285774441141" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\image\tk2.png" class="card-img-top" alt="Image 1" />
+            <div class="card-body">
+              <h5 class="card-title">KB-TK Tarakanita 2 Jakarta</h5>
+              <p class="card-text">
+                Jl. Wolter Monginsidi No.118, Petogogan, Kebayoran Baru, Jakarta
+                Selatan
+              </p>
+              <br />
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formtk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Daftar
+              </a>
+              <a href="https://wa.me/+6281211343534" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center KB-TK
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/tk3.jpg" class="card-img-top" alt="Image 1" />
+            <div class="card-body">
+              <h5 class="card-title">KB-TK Tarakanita 3 Jakarta</h5>
+              <p class="card-text">
+                Jl. Juraganan, Grogol Utara, Kebayoran Lama, Jakarta Selatan
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formtk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Daftar
+              </a>
+
+              <a href="https://wa.me/6281271451172" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center KB-TK
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/tk4.jpg" class="card-img-top" alt="Image 1" />
+            <div class="card-body">
+              <h5 class="card-title">KB-TK Tarakanita 4 Jakarta</h5>
+              <p class="card-text">
+                Jln.Taman Pluit Permai Barat I Pluit Penjaringan Jakarta Utara
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formtk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Daftar
+              </a>
+
+              <a href="https://wa.me/6285810005751" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center KB-TK
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/tk5.jpeg" class="card-img-top" alt="Image 1" />
+            <div class="card-body">
+              <h5 class="card-title">KB-TK Tarakanita 5 Jakarta</h5>
+              <p class="card-text">
+                Jl. Wisma Jaya No.13 Rawamangun, Pulogadung Jakarta Timur
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formtk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Daftar
+              </a>
+
+              <a href="https://wa.me/6281322427505" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center KB-TK
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SD 1-5 -->
+      <div class="row">
+        <div class="inline-blocks" style="margin-top: 1.5%;margin-bottom: 2%;">
+          <h3>
+            <b><i class="fa-solid fa-angles-down" style="font-size: 20pt;"></i>&nbsp;&nbsp; Jenjang SD</b>
+          </h3>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sd1.jpeg" class="card-img-top" alt="Image 2" />
+            <div class="card-body">
+              <h5 class="card-title">SD Tarakanita 1 Jakarta</h5>
+              <p class="card-text">
+                JL. BARITO II NO. 54 KEL. KRAMAT PELA KEC. KEBAYORAN BARU
+                JAKARTA SELATAN
+              </p>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsd.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6281289767457" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SD
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sd2.jpg" class="card-img-top" alt="Image 2" />
+            <div class="card-body">
+              <h5 class="card-title">SD Tarakanita 2 Jakarta</h5>
+              <p class="card-text">
+                Jl. Puloraya IV No.17, Petogogan, Kebayoran Baru, Jakarta
+                Selatan
+              </p>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsd.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6281281996250" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SD
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sd3.jpg" class="card-img-top" alt="Image 2" />
+            <div class="card-body">
+              <h5 class="card-title">SD Tarakanita 3 Jakarta</h5>
+              <p class="card-text">
+                Jl. Juraganan No.1, Grogol Utara, Jakarta Selatan
+              </p>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsd.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6285215113300" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SD
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sd4.jpeg" class="card-img-top" alt="Image 2" />
+            <div class="card-body">
+              <h5 class="card-title">SD Tarakanita 4 Jakarta</h5>
+              <p class="card-text">
+                Jl. Taman Pluit Permai Barat No. 1 Jakarta Utara
+              </p>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsd.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6285774718649" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SD
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sd5.jpeg" class="card-img-top" alt="Image 2" />
+            <div class="card-body">
+              <h5 class="card-title">SD Tarakanita 5 Jakarta</h5>
+              <p class="card-text">
+                Jalan Pemuda No 6 Rawamangun Jakarta Timur
+              </p>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsd.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6285710819155" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SD
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SMP 1-5 -->
+      <div class="row">
+        <div class="inline-blocks" style="margin-top: 1.5%;margin-bottom: 2%;">
+          <h3>
+            <b><i class="fa-solid fa-angles-down" style="font-size: 20pt;"></i>&nbsp;&nbsp; Jenjang SMP</b>
+          </h3>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smpsatu.jpg" class="card-img-top" alt="Image 3" />
+            <div class="card-body">
+              <h5 class="card-title">SMP Tarakanita 1 Jakarta</h5>
+              <p class="card-text">
+                Jl. Puloraya IV No.17, Petogogan, Kebayoran Baru, Jakarta
+                Selatan
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmp.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6285710240868" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMP
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smp2.jpg" class="card-img-top" alt="Image 3" />
+            <div class="card-body">
+              <h5 class="card-title">SMP Tarakanita 2 Jakarta</h5>
+              <p class="card-text">
+                Jl. Taman Pluit Permai Barat No. 1 Jakarta Utara
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmp.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6285810005787" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMP
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smp3.jpeg" class="card-img-top" alt="Image 3" />
+            <div class="card-body">
+              <h5 class="card-title">SMP Tarakanita 3 Jakarta</h5>
+              <p class="card-text">
+                Jl. Juraganan 1, Grogol Utara, Kec. Kebayoran Lama, Kota Jakarta
+                Selatan, Dki Jakarta
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmp.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6281292239700" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMP
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smp4.jpg" class="card-img-top" alt="Image 3" />
+            <div class="card-body">
+              <h5 class="card-title">SMP Tarakanita 4 Jakarta</h5>
+              <p class="card-text">
+                Jl. Balai Pustaka Baru I Rawamangun Jakarta Timur 13220
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmp.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6287840381145" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMP
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smp5.jpeg" class="card-img-top" alt="Image 3" />
+            <div class="card-body">
+              <h5 class="card-title">SMP Tarakanita 5 Jakarta</h5>
+              <p class="card-text">
+                Jl. Barito II No.2, RT.8/RW.5, Kramat Pela, Kec. Kby. Baru, Kota
+                Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12130
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmp.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/628111189848" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMP
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SMA 1-2 & SMK -->
+      <div class="row">
+        <div class="inline-blocks" style="margin-top: 1.5%;margin-bottom: 2%;">
+          <h3>
+            <b><i class="fa-solid fa-angles-down" style="font-size: 20pt;"></i>&nbsp;&nbsp; Jenjang SMA/SMK</b>
+          </h3>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sma1.jpg" class="card-img-top" alt="Image 4" />
+            <div class="card-body">
+              <h5 class="card-title">SMA Tarakanita 1 Jakarta</h5>
+              <p class="card-text">
+                Jl. Pulo Raya IV No. 17 Kebayoran Baru, Jakarta Selatan, 12170
+              </p>
+              <br />
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsma.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6281280178738" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMA
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/sma2.jpg" class="card-img-top" alt="Image 4" />
+            <div class="card-body">
+              <h5 class="card-title">SMA Tarakanita 2 Jakarta</h5>
+              <p class="card-text">
+                Jalan Pluit Permai Dalam 1 Nomor 10 RT 15 RW 04, Pluit,
+                Penjaringan, Jakarta Utara
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsma.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6282113711010" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMA
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/smk.jpg" class="card-img-top" alt="Image 4" />
+            <div class="card-body">
+              <h5 class="card-title">SMK Tarakanita Jakarta</h5>
+              <p class="card-text">
+                Jalan Wolter Monginsidi No. 118 Petogogan, Kebayoran Baru -
+                Jakarta Selatan
+              </p>
+
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb jkt\Jakarta\formsmk.html" class="btn btn-primary mr-2">
+                <i class="fas fa-user"></i> Ditutup
+              </a>
+
+              <a href="https://wa.me/6281219405820" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Call Center SMK
+              </a>
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-phone"></i> Virtual Tour Sekolah
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="container text-center mt-5 d-flex flex-column align-items-center"
+    >
+      <div class="cropped-image">
+        <!-- Replace 'your-image-url.jpg' with the URL of the image you want to display -->
+        <img src="C:/xampp/htdocs/PPDB-2024/page source ppdb jkt/image/admin.png" alt="Cropped Image" width="150" />
+      </div>
+      <p>Dapatkan informasi PPDB lengkap melalui Nomor Telepon berikut ini</p>
+      <a href="#" target="_blank" class="whatsapp-button">
+        <i></i>(021) 3908836
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p><strong>&copy; 2024 Sub-TI Yayasan Tarakanita</strong></p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get all the cards
+        var cards = document.querySelectorAll(".card");
+
+        // Loop through all the cards and add 'show' class with a delay
+        function showCardsWithDelay() {
+          for (var i = 0; i < cards.length; i++) {
+            (function (card, i) {
+              setTimeout(function () {
+                card.classList.add("show");
+              }, 200 * i); // This will create a 200ms delay between each card
+            })(cards[i], i);
+          }
+        }
+
+        // Show the cards after a delay
+        showCardsWithDelay();
+
+        // Remove the animation script after showing the cards
+        setTimeout(function () {
+          var script = document.querySelector("script");
+          script.parentNode.removeChild(script);
+        }, 200 * cards.length);
+      });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Z/yJlW63V4TAjKT2fC8EvFqWkPoRhxzI9IdZQwpS3zFZO"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.addEventListener("mouseover", () => {
+        const jumbotron = document.querySelector(".jumbotron");
+        const jumbotronOffset = jumbotron.getBoundingClientRect().top;
+        const screenHeight = window.innerHeight;
+
+        if (jumbotronOffset <= screenHeight * 0.5) {
+          document.body.classList.add("scrolled");
+        } else {
+          document.body.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>
