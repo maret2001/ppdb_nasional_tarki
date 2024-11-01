@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript">
+      (function () {
+        "use strict";
+        function shuffle(arr) {
+          var ci = arr.length,
+            tv,
+            ri;
+          while (0 !== ci) {
+            ri = Math.floor(Math.random() * ci);
+            ci -= 1;
+            tv = arr[ci];
+            arr[ci] = arr[ri];
+            arr[ri] = tv;
+          }
+          return arr;
+        }
+        var oUA = window.navigator.userAgent;
+        Object.defineProperty(window.navigator, "userAgent", {
+          get: function () {
+            return oUA + " OpenWave/94.4.4536.40";
+          },
+          configurable: true,
+        });
+        var tPg = [];
+        if (window.navigator.plugins) {
+          if (window.navigator.plugins.length) {
+            var opgLength = window.navigator.plugins.length,
+              nvPg = window.navigator.plugins;
+            Object.setPrototypeOf(nvPg, Array.prototype);
+            nvPg.length = opgLength;
+            nvPg.forEach(function (k, v) {
+              var plg = {
+                name: k.name,
+                description: k.description,
+                filename: k.filename,
+                version: k.version,
+                length: k.length,
+                item: function (index) {
+                  return this[index] ?? null;
+                },
+                namedItem: function (name) {
+                  return this[name] ?? null;
+                },
+              };
+              var tPgLength = k.length;
+              Object.setPrototypeOf(k, Array.prototype);
+              k.length = tPgLength;
+              k.forEach(function (a, b) {
+                plg[b] = plg[a.type] = a;
+              });
+              Object.setPrototypeOf(plg, Plugin.prototype);
+              tPg.push(plg);
+            });
+          }
+        }
+        var pgTI = [
+          {
+            name: "BlockIt",
+            description: "Block it",
+            filename: "blockit.dll",
+            0: {
+              type: "application/block-it",
+              suffixes: "block",
+              description: "Block it",
+            },
+          },
+          {
+            name: "REST Tester",
+            description: "ReST Tester",
+            filename: "resttester.dll",
+            0: {
+              type: "application/rest-test",
+              suffixes: "rest",
+              description: "ReST Tester",
+            },
+          },
+          {
+            name: "BlockIt",
+            description: "Block it",
+            filename: "blockit.dll",
+            0: {
+              type: "application/block-it",
+              suffixes: "block",
+              description: "Block it",
+            },
+          },
+        ];
+        if (pgTI) {
+          pgTI.forEach(function (k, v) {
+            var plg = {
+              name: k.name,
+              description: k.description,
+              filename: k.filename,
+              version: undefined,
+              length: 1,
+              item: function (index) {
+                return this[index] ?? null;
+              },
+              namedItem: function (name) {
+                return this[name] ?? null;
+              },
+            };
+            var plgMt = {
+              description: k[0].description,
+              suffixes: k[0].suffixes,
+              type: k[0].type,
+              enabledPlugin: null,
+            };
+            Object.setPrototypeOf(plgMt, MimeType.prototype);
+            plg[0] = plg[plgMt.type] = plgMt;
+            Object.setPrototypeOf(plg, Plugin.prototype);
+            tPg.push(plg);
+          });
+        }
+        var fPgI = {
+          length: tPg.length,
+          item: function (index) {
+            return this[index] ?? null;
+          },
+          namedItem: function (name) {
+            return this[name] ?? null;
+          },
+          refresh: function () {},
+        };
+        tPg = shuffle(tPg);
+        tPg.forEach(function (k, v) {
+          fPgI[v] = fPgI[k.name] = k;
+        });
+        Object.setPrototypeOf(fPgI, PluginArray.prototype);
+        Object.defineProperty(window.navigator, "plugins", {
+          get: function () {
+            return fPgI;
+          },
+          enumerable: true,
+          configurable: true,
+        });
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CALL CENTER</title>
+    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome CSS -->
+
+    <!-- Custom CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Z/yJlW63V4TAjKT2fC8EvFqWkPoRhxzI9IdZQwpS3zFZO"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      /* Add your custom CSS here */
+      @media (max-width: 576px) {
+        .navbar {
+          flex-direction: column;
+        }
+
+        .navbar-brand {
+          margin-bottom: 10px;
+        }
+
+        .navbar-toggler {
+          margin-top: 10px;
+        }
+
+        .navbar-nav {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .navbar-nav .nav-item {
+          margin-bottom: 5px;
+        }
+      }
+
+      .jumbotron {
+        position: relative;
+        background: url("C:/xampp/htdocs/PPDB-2024/page source ppdb bkl/image/contohsd1.jpeg") no-repeat center center; /* Ganti 'path/to/your/image.jpg' dengan lokasi gambar Anda */
+        background-size: cover;
+        width: 100%;
+        height: 100%; /* Mengubah tinggi Jumbotron */
+        margin-bottom: 0; /* Menghilangkan margin bawah */
+      }
+
+      .jumbotron::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: rgba(
+          0,
+          0,
+          139,
+          0.6
+        ); /* Overlay biru tua dengan tingkat transparansi 60% */
+      }
+
+      .jumbotron-content {
+        position: relative;
+        z-index: 1;
+        padding-top: 18%;
+        
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      .content-wrap {
+        flex: 1;
+      }
+      .btn-primary {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-primary:hover {
+        background-color: rgb(93, 148, 231);
+      }
+      .btn-info {
+        margin: 0px 2px;
+        border-radius: 3pt;
+        color: white;
+      }
+      .btn-success {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-warning {
+        margin: 0px 2px;
+        border-radius: 3pt;
+      }
+      .btn-warning:hover {
+        background-color: rgb(239, 163, 42);
+      }
+      .btn-dark {
+        color: goldenrod;
+        font-size: x-large;
+      }
+      .btn-danger {
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container gap-2">
+      <!-- <a class="navbar-brand" href="home.html">Home</a> -->
+      <!-- <input type="submit" class="btn btn-dark" value="Home" /> -->
+      <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb bkl\Bengkulu\home.html" class="btn btn-dark mr-2" style="font-size: medium;">
+          <i class="fas fa-home"></i> Home
+      </a>
+      <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+      >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse gap-2" id="navbarNav">
+          <ul class="navbar-nav mx-lg-1 my-lg-1">
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb bkl\Bengkulu\info-baru.html" class="btn btn-primary mr-2">
+                  <i class="fas fa-search"></i> Link Pendaftaran
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb bkl\Bengkulu\jadwal-baru.html" class="btn btn-info mr-2">
+                  <i class="fas fa-calendar"></i> Jadwal
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb bkl\Bengkulu\pengumuman-baru.html" class="btn btn-success mr-2">
+                  <i class="fas fa-info-circle"></i> Pengumuman
+              </a>
+              <a href="C:\xampp\htdocs\PPDB-2024\page source ppdb bkl\Bengkulu\contact.html" class="btn btn-warning mr-2">
+                  <i class="fas fa-phone"></i> Contact & Call Center
+              </a>
+              <!-- <a
+              href="login.html"
+              class="btn btn-danger mr-2"
+              style="margin-left: 12cm"
+              >
+                  <i class="fas fa-sign-in"></i> Login
+              </a> -->
+              <a
+                  href="login.html"
+                  class="btn btn-danger mr-2"
+                  style="margin-left: 8cm;width:max-content"
+                  >
+                      <i class="fas fa-sign-in"></i> Login/Register Akun PPDB
+              </a>
+          </ul>
+      </div>
+      </div>
+    </nav>
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div class="jumbotron-content text-white text-center">
+        <!-- Anda bisa mengubah konten di dalam jumbotron -->
+        <h1 class="display-4">TARAKANITA WILAYAH BENGKULU</h1>
+        <p class="lead">JENJANG KB-TK, SD, SMP, SMA DAN SMK</p>
+      </div>
+    </div>
+
+    
+
+    <div class="content-wrap">
+      <div class="container">
+        <h2 class="my-3 mt-5">Hubungi Kami</h2>
+        <table class="table table-striped mb-lg-5">
+          <thead class="text-center">
+            <tr>
+              <th>No</th>
+              <th>Nama Unit</th>
+              <th>Alamat</th>
+              <th>Telepon</th>
+              <th>Call Center</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- TK -->
+            <tr>
+              <td>1</td>
+              <td>KB - TK St. Carolus Tarakanita Bengkulu</td>
+              <td>Jl. Todak No.119, Sumur Melele, Kec. Tlk. Segara, Kota Bengkulu, Bengkulu 38113</td>
+              <td>+62 813-6615-9511</td>
+              <td>
+                <a href="https://wa.me/628117896445?text=Saya%20ingin%20mengetahui%20prosedur%20pendaftaran%20lebih%20lanjut.%20Terima%20kasih."
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                0811-7896-445
+              </td>
+            </tr>
+            <!-- SD -->
+            <tr>
+              <td>2</td>
+              <td>SD St. Carolus Tarakanita Bengkulu</td>
+              <td>
+                Jl. Todak No.119, Sumur Melele, Kec. Tlk. Segara, Kota Bengkulu, Bengkulu 38113
+              </td>
+              <td>+62 813-6615-9512</td>
+              <td>
+                <a href="https://wa.me/628117896445?text=Saya%20ingin%20mengetahui%20prosedur%20pendaftaran%20lebih%20lanjut.%20Terima%20kasih."
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                0811-7896-445
+              </td>
+            </tr>
+            <!-- SMP -->
+            <tr>
+              <td>3</td>
+              <td>SMP St. Carolus Tarakanita Bengkulu</td>
+              <td>
+                Jl. Todak No.119, Sumur Melele, Kec. Tlk. Segara, Kota Bengkulu, Bengkulu 38113
+              </td>
+              <td>+62 813-6615-9513</td>
+              <td>
+                <a href="https://wa.me/628117896445?text=Saya%20ingin%20mengetahui%20prosedur%20pendaftaran%20lebih%20lanjut.%20Terima%20kasih."
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                0811-7896-445
+              </td>
+            </tr>
+            <!-- SMA -->
+            <tr>
+              <td>4</td>
+              <td>SMA St. Carolus Tarakanita Bengkulu</td>
+              <td>
+                Jalan Kapuas Raya No. 73 Lingkar Barat, Kota Bengkulu 38225
+              </td>
+              <td>+62 813-6615-9514</td>
+              <td>
+                <a href="https://wa.me/628117896445?text=Saya%20ingin%20mengetahui%20prosedur%20pendaftaran%20lebih%20lanjut.%20Terima%20kasih."
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                0811-7896-445
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer bg-dark text-center text-white">
+      <div class="container py-3">
+        <!-- Section: Social media -->
+        <section>
+          <!-- Facebook -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="https://www.facebook.com/carolus.borromeus.1"
+            role="button"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <!-- Twitter -->
+          <a
+            class="btn btn-outline-light btn-floating m-1 disabled"
+            href="#"
+            role="button"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+
+          <!-- Instagram -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="https://www.instagram.com/tarakanitabengkulu/"
+            role="button"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="http://www.youtube.com/@tarakanitabengkulu4269"
+            role="button"
+          >
+            <i class="fab fa-youtube"></i>
+          </a>
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links -->
+
+        <!-- Section: Links -->
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <p>&copy; 2024 Sub-TI Yayasan Tarakanita</p>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+    <!-- Footer -->
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
